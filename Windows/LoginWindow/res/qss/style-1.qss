@@ -1,0 +1,119 @@
+/**
+    该页面为粉红色皮肤
+*/
+
+
+/*背景*/
+#frame_background{
+border-image:url(:/res/pic/background-1.png);
+}
+
+/*登录背景*/
+#frame_login{background-color:#ffffff}
+
+/*右侧图片*/
+#frame_picture{
+    background-image:url(:/res/pic/1.png);
+
+}
+/*账户和密码框*/
+#frame_account,#frame_password{
+    border: 1px solid #696969;
+    border-radius: 5px;
+}
+
+QLineEdit{
+    border: none;
+}
+
+
+/*按钮-忘记密码*/
+#pushButton_forget_password{
+    border:none;
+    color:#e83737;
+}
+
+/*按钮-忘记密码-鼠标悬停*/
+#pushButton_forget_password:hover{
+    border:none;
+    color:#e83737;
+}
+
+/*按钮-忘记密码*/
+#pushButton_register{
+    border:none;
+    color:#e83737;
+}
+
+/*按钮-忘记密码-鼠标悬停*/
+#pushButton_register:hover{
+    border:none;
+    color:#e83737;
+}
+
+/*按钮-登录*/
+#pushButton_login{
+    color:#ffffff;
+    border: none;
+    background-color:#fd6c92;
+    border-radius: 5px;
+}
+/*按钮-登录-鼠标悬停*/
+#pushButton_login:hover{
+    color:#ffffff;
+    border: none;
+    background-color:#fd4979;
+    border-radius: 5px;
+}
+/*按钮-登录-鼠标按下*/
+#pushButton_login:pressed{
+    color:#ffffff;
+    border: none;
+    background-color:#fd6c92;
+    border-radius: 5px;
+}
+/*label-login*/
+#label_login
+{
+    color:#e83737;
+
+}
+/*图标-账户*/
+#label_account
+{
+    border-image:url(:res/pic/user_name.png);
+}
+/*图标-密码*/
+#label_password
+{
+    border-image:url(:/res/pic/pwd.png);
+
+}
+/*按钮-qq*/
+#pushButton_qq{
+    background-image:url(:res/pic/qq.png);
+    background-position:center;
+    background-repeat:no-repeat;
+    border:none;
+}
+/*按钮-qq-鼠标悬停*/
+#pushButton_qq:hover{
+    background-image:url(:res/pic/qq-hover.png);
+    background-position:center;
+    background-repeat:no-repeat;
+    border:none;
+}
+/*按钮-微信*/
+#pushButton_wx{
+    background-image:url(:/res/pic/wx.png);
+    background-position:center;
+    background-repeat:no-repeat;
+    border:none;
+}
+/*按钮-微信-鼠标悬停*/
+#pushButton_wx:hover{
+    background-image:url(:/res/pic/wx-hover.png);
+    background-position:center;
+    background-repeat:no-repeat;
+    border:none;
+}
