@@ -14,10 +14,10 @@
 #include <QFile>
 
 #include "ui_homewindow.h"
-#include "ui_chatpage.h"
+#include "FriendWindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {class homewindow;}
+namespace Ui {class HomeWindow;}
 QT_END_NAMESPACE  
 
 class HomeWindow : public QWidget {
@@ -25,8 +25,18 @@ class HomeWindow : public QWidget {
 public:
     HomeWindow(QWidget *parent);
     ~HomeWindow() = default;
+    void showFriendWindow();
+    void showGroupWindow();
+    void showCommunityWindow();
+    void showShopWindow();
+    void showSettingWindow();
+    void showPlayGameWindow();
+    void initAllWindow();
+    
 public:
-    std::shared_ptr<Ui::homewindow>  ui_;
+    std::shared_ptr<Ui::HomeWindow>  ui_;
+    FriendWindow *friendwindow_;
+    // std::shared_ptr<FriendWindow> friendwidow_;
 };
 
 #endif // HOMEWINDOW_H

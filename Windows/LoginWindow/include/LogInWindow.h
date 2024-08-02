@@ -14,7 +14,7 @@
 #include <QFile>
 
 #include "UserInfoManager.h"
-#include "RegisterUi.h"
+#include "RegisterWindow.h"
 #include "ui_new_login.h"
 
 QT_BEGIN_NAMESPACE

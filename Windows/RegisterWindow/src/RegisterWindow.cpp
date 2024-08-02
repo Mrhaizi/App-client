@@ -1,4 +1,4 @@
-﻿#include "RegisterUi.h"
+﻿#include "RegisterWindow.h"
 RegisterWindow::RegisterWindow(QWidget *parent, std::shared_ptr<UserInfoManager> userinfomanager)
                                  : infomanager_(userinfomanager) , 
                                     ui_(std::make_shared<Ui::RegisterWindow>()) 

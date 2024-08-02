@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(ChatWindow)
+project(FriendWindow)
 
 
 # 收集源文件
@@ -22,7 +22,6 @@ add_library(${PROJECT_NAME} STATIC ${SRC} ${UIS_HEADERS} ${MOC_SRCS})
 # 包含头文件路径
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_BINARY_DIR}/Windows/${PROJECT_NAME})
-# target_include_directories(${PROJECT_NAME} PUBLIC ../LoginWindow/include)
 
 if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONNECTOR_CPP_DIR}/include)

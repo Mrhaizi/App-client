@@ -32,7 +32,7 @@ endif()
 
 add_subdirectory(function/UserInfoManager)
 add_subdirectory(Windows/RegisterWindow)
-add_subdirectory(Windows/ChatWindow)
+add_subdirectory(Windows/FriendWindow)
 add_subdirectory(Windows/GroupWindow)
 add_subdirectory(Windows/PlayGameWindow)
 add_subdirectory(Windows/LoginWindow)
@@ -50,6 +50,7 @@ if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONNECTOR_CPP_DIR}/include)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
                                         LoginWindow
+                                        HomeWindow
                                         UserInfoManager
                                         Qt5::Widgets
                                         Qt5::Gui
@@ -70,6 +71,7 @@ if(WIN32)
 
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
+                                        HomeWindow
                                         LoginWindow
                                         Qt5::Widgets
                                         Qt5::Core

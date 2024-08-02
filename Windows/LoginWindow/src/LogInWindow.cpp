@@ -1,4 +1,4 @@
-#include "LogInUi.h"
+#include "LogInWindow.h"
 
 LoginWindow::LoginWindow(QWidget *parent, std::shared_ptr<UserInfoManager> infomanager)
     : QWidget(parent)
