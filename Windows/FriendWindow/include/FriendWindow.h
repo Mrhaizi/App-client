@@ -25,10 +25,16 @@ class FriendWindow : public QWidget {
 public:
     FriendWindow(QWidget *parent = nullptr);
     ~FriendWindow() = default;
-
     void updateChatWindow();
-    
 
+    void updateFriendList();
+
+    void SendMsg();
+
+    void saveChatHistory();
+
+    void loadChatHistory();
+    
 private:
     std::shared_ptr<Ui::FriendWindow> ui_;
 };

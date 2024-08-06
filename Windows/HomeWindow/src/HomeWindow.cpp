@@ -6,11 +6,13 @@ HomeWindow::HomeWindow(QWidget *Parent)
     {
 
         ui_->setupUi(this);
-        connect(ui_->pushButton_friend, &QPushButton::clicked, this, &HomeWindow::showChatWindow);
+        initAllWindow();
+        connect(ui_->pushButton_friend, &QPushButton::clicked, this, &HomeWindow::showFriendWindow);
         connect(ui_->pushButton_play_game, &QPushButton::clicked, this, &HomeWindow::showPlayGameWindow);
     }
 
-void HomeWindow::showChatWindow() {
+void HomeWindow::showFriendWindow() {
+    
     ui_->stackedWidget_run_function->setCurrentWidget(friendwindow_);
     // if (chatwindow_ != nullptr) {
     //     chatwindow_ = nullptr;
@@ -24,11 +26,8 @@ void HomeWindow::showPlayGameWindow() {
 
 }
 
-void HomeWindow::initAllFunWindow() {
+void HomeWindow::initAllWindow() {
     friendwindow_ = new FriendWindow();
     ui_->stackedWidget_run_function->addWidget(friendwindow_);
 }
 
-void HomeWindow::showFriendFunWindow() {
-
-}

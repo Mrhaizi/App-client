@@ -24,7 +24,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="1" column="0">
-       <widget class="QFrame" name="frame_find_2">
+       <widget class="QFrame" name="frame_find">
         <property name="minimumSize">
          <size>
           <width>200</width>
@@ -123,7 +123,7 @@
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QListWidget" name="listWidget_friend_2">
+       <widget class="QListWidget" name="listWidget_friend_list">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -139,14 +139,14 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLabel" name="label_friend_name_2">
+       <widget class="QLabel" name="label_friend_name">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
       <item row="2" column="1" rowspan="2">
-       <widget class="QWidget" name="widget_friend_2" native="true">
+       <widget class="QWidget" name="widget_chat" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
           <widget class="QTextBrowser" name="textBrowser_chat_window"/>
@@ -154,7 +154,7 @@
          <item>
           <layout class="QGridLayout" name="gridLayout">
            <item row="0" column="0" rowspan="2" colspan="2">
-            <widget class="QTextEdit" name="textEdit"/>
+            <widget class="QTextEdit" name="textEdit_chat"/>
            </item>
            <item row="1" column="1">
             <widget class="QPushButton" name="pushButton_send">
