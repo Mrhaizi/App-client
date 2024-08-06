@@ -29,12 +29,12 @@ public:
 
     void updateFriendList();
 
-    void SendMsg();
+    void sendMsg();
 
     void saveChatHistory();
 
     void loadChatHistory();
-    
+
 private:
     std::shared_ptr<Ui::FriendWindow> ui_;
 };
