@@ -3,6 +3,9 @@ import json
 import sys
 import platform
 
+import os
+import json
+
 def getJars(minecraftDir, version):
     jsonFilePath = os.path.join(minecraftDir, 'versions', version, f'{version}.json')
 
@@ -13,14 +16,19 @@ def getJars(minecraftDir, version):
     for x in jsonFileKeys['libraries']:
         jarFileParts = x['name'].split(':')
         jarFile = os.path.join(minecraftDir, 'libraries', 
-                               jarFileParts[0].replace('.', '/'), jarFileParts[1], jarFileParts[2], 
+                               jarFileParts[0].replace('.', os.sep), jarFileParts[1], jarFileParts[2], 
                                f'{jarFileParts[1]}-{jarFileParts[2]}.jar')
         jars.append(jarFile)
     
     if 'inheritsFrom' in jsonFileKeys:
         jars.extend(getJars(minecraftDir, jsonFileKeys['inheritsFrom']))
 
-    return ':'.join(jars)
+    # 根据操作系统选择分隔符
+    separator = ';' if os.name == 'nt' else ':'
+    return separator.join(jars)
+
+# 其他代码保持不变
+
 def getForgeJars(minecraftDir, forge_version):
     jars = []
     try:
@@ -32,8 +40,8 @@ def getForgeJars(minecraftDir, forge_version):
         for x in files:
             jarFile = os.path.join(ForgePath, x)
             jars.append(jarFile)
-        
-        return ':'.join(jars)
+        separator = ';' if os.name == 'nt' else ':'
+        return separator.join(jars)
     except Exception as e:
         print(f"An error occurred: {e}")
         return []
@@ -44,12 +52,11 @@ def check_features(features):
 
 def getLowerMinecraftArgvs(minecraftDir, version, ID):
     jsonFilePath = os.path.join(minecraftDir, 'versions', version, f'{version}.json')
-    # print(jsonFilePath)
 
     with open(jsonFilePath, 'r') as jsonFile:
         jsonFileKeys = json.load(jsonFile)
-
     argvs = []
+
     if 'minecraftArguments' in jsonFileKeys:
         # 使用旧的字符串式参数配置(低版本)
         argvs.append(jsonFileKeys['minecraftArguments'])
@@ -87,9 +94,10 @@ def main():
     MinecraftDir = './.minecraft'
     Version = ''
     maxMen = '2048m'
+    forge_version = ''
     ID = ''
     job = 0
-    theUsageText = (f'Usage:\t\t{sys.argv[0]} [-d Minecraft_dir] [-v version] [-m 2048m] Username\n'
+    theUsageText = (f'Usage:\t\t{sys.argv[0]} [-d Minecraft_dir] [-v version] [-f forge_version] [-m 2048m] Username\n'
                     f'\t\t\tLaunch Minecraft\n\n'
                     f'\t\t{sys.argv[0]} [-d Minecraft_dir] -l\n\t\t\tList Minecraft versions')
 
@@ -105,6 +113,9 @@ def main():
             elif sys.argv[t] == '-v':
                 t += 1
                 Version = sys.argv[t]
+            elif sys.argv[t] == '-f':
+                t += 1
+                forge_version = sys.argv[t]
             elif sys.argv[t] == '-m':
                 t += 1
                 maxMen = sys.argv[t]
@@ -133,10 +144,26 @@ def main():
         versions = os.listdir(os.path.join(MinecraftDir, 'versions'))
         versions.sort(reverse=True)
         Version = versions[0]
-    #低版本加-Xincgc这个配置
-        
+    
+    jars = getJars(MinecraftDir, Version)
     system = platform.system()
     if system == "Linux":
+        native_path = os.path.join(MinecraftDir, "versions", Version, "natives-linux-x86_64")
+        jars += f':{os.path.join(MinecraftDir, "versions", Version, f"{Version}.jar")}'
+        if forge_version != '':
+            forge_jars = getForgeJars(MinecraftDir, forge_version)
+            jars += f':{forge_jars}'
+    elif system == "Windows":
+        native_path = os.path.join(MinecraftDir, "versions", Version, f'{Version}-natives')
+        jars += f';{os.path.join(MinecraftDir, "versions", Version, f"{Version}.jar")}'
+        if forge_version != '':
+            forge_jars = getForgeJars(MinecraftDir, forge_version)
+            jars += f';{forge_jars}'
+    else:
+        print("Unsupported system")
+        sys.exit()
+
+    if system == "Windows":
         before = (
             f'java '
             f'-Dorg.lwjgl.util.Debug=true '
@@ -145,14 +172,20 @@ def main():
             f'-XX:-OmitStackTraceInFastThrow '
             f'-Xmn128m '
             f'-Xmx{maxMen} '
-            f'-Djava.library.path={os.path.join(MinecraftDir, "versions", Version, "natives-linux-x86_64")} '
-            f'-Dfml.ignoreInvalidMinecraftCertificates=true '
-            f'-Dfml.ignorePatchDiscrepancies=true '
+            f'-Djava.library.path={native_path} '
             f'-Duser.home=/ '
-            f'-cp "'
+            f'-cp "{jars}" '
         )
-    elif system == "Windows":
-                before = (
+        after = getLowerMinecraftArgvs(MinecraftDir, Version, ID)
+        cmd = before + after
+
+        with open("run_game.bat", "w") as bat_file:
+            bat_file.write(cmd)
+
+        print("Command line arguments written to run_game.bat")
+        os.system("run_game.bat")
+    elif system == "Linux":
+        before = (
             f'java '
             f'-Dorg.lwjgl.util.Debug=true '
             f'-Dorg.lwjgl.util.DebugLoader=true '
@@ -160,30 +193,20 @@ def main():
             f'-XX:-OmitStackTraceInFastThrow '
             f'-Xmn128m '
             f'-Xmx{maxMen} '
-            f'-Djava.library.path={os.path.join(MinecraftDir, "versions", Version, "natives-linux-x86_64")} '
+            f'-Djava.library.path={native_path} '
             f'-Dfml.ignoreInvalidMinecraftCertificates=true '
             f'-Dfml.ignorePatchDiscrepancies=true '
             f'-Duser.home=/ '
-            f'-cp "'
+            f'-cp "{jars}" '
         )
-    jars = getJars(MinecraftDir, Version)
+        after = getLowerMinecraftArgvs(MinecraftDir, Version, ID)
+        cmd = before + after
 
-
-    jars += f':{os.path.join(MinecraftDir, "versions", Version, f"{Version}.jar")}' 
-
-
-    forge_jars = getForgeJars(MinecraftDir, '1.20.4-49.1.4')
-
-    jars += f':{forge_jars}"'
-    after = getLowerMinecraftArgvs(MinecraftDir, Version, ID)
-
-    cmd = before + jars + " " + after
-    
-    
-
-
-
-    os.system(cmd)    
+        with open("run_game.sh", "w") as sh_file:
+            sh_file.write(cmd)
+        os.chmod("run_game.sh", 0o755)
+        print("Command line arguments written to run_game.sh")
+        os.system("./run_game.sh")
 
 if __name__ == "__main__":
     main()
