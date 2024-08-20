@@ -14,6 +14,10 @@
 #include <jdbc/cppconn/exception.h>
 #include <jdbc/cppconn/prepared_statement.h>
 
+#include "PersonalInfoManager.h"
+#include "CommunicatorClient.h"
+
+
 
 struct MySqlInfo {
     std::string host;
@@ -21,15 +25,6 @@ struct MySqlInfo {
     std::string password;
     std::string database;
     std::string table;
-};
-
-struct UserInfo {
-    int id;
-    int grade;
-    std::string password;
-    std::string name;
-    int experience;
-    int integral;
 };
 
 class UserInfoManager {
@@ -41,6 +36,8 @@ public:
     bool fetchUserInfo(const std::string& username, const std::string& password);
     
     bool fetchUserName(const std::string& username);
+
+    bool getSingleUserAllInfo(const std::string& username);
 
 private:
     MySqlInfo mysqlinfo_;

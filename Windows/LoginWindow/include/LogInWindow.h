@@ -16,6 +16,7 @@
 #include "UserInfoManager.h"
 #include "RegisterWindow.h"
 #include "ui_new_login.h"
+#include "HomeWindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class LoginWindow;}
@@ -35,7 +36,8 @@ private slots:
 
 private:
     std::shared_ptr<Ui::LoginWindow> ui_;
-    std::shared_ptr<UserInfoManager> infomanager_;
+    std::shared_ptr<UserInfoManager> userinfomanager_;
+    HomeWindow *homewindow_;
 };
 
 #endif //LOGINUI_H

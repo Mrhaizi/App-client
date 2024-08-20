@@ -26,12 +26,14 @@ if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONNECTOR_CPP_DIR}/include)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
                                         RegisterWindow
+                                        HomeWindow
                                         Qt5::Widgets
                                         Qt5::Core
                                         Qt5::Gui
                                         UserInfoManager)
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC
+                                        HomeWindow
                                         RegisterWindow 
                                         UserInfoManager)
 endif()

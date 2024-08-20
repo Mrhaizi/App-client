@@ -1,7 +1,8 @@
 #include <HomeWindow.h>
 
-HomeWindow::HomeWindow(QWidget *Parent) 
+HomeWindow::HomeWindow(QWidget *Parent, std::shared_ptr<UserInfoManager> userinfomanager) 
     : ui_(std::make_shared<Ui::HomeWindow>()),
+      userinfomanager_(userinfomanager),
       QWidget(Parent) 
     {
 
@@ -27,7 +28,23 @@ void HomeWindow::showPlayGameWindow() {
 }
 
 void HomeWindow::initAllWindow() {
-    friendwindow_ = new FriendWindow();
+    friendwindow_ = new FriendWindow(nullptr, userinfomanager_);
     ui_->stackedWidget_run_function->addWidget(friendwindow_);
+}
+
+void HomeWindow::showGroupWindow() {
+
+}
+
+void HomeWindow::showShopWindow() {
+
+}
+
+void HomeWindow::showSettingWindow() {
+
+}
+
+void HomeWindow::showCommunityWindow() {
+
 }
 

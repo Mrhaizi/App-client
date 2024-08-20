@@ -179,11 +179,11 @@ def main():
         after = getLowerMinecraftArgvs(MinecraftDir, Version, ID)
         cmd = before + after
 
-        with open("run_game.bat", "w") as bat_file:
+        with open("./script/run_game.bat", "w") as bat_file:
             bat_file.write(cmd)
 
         print("Command line arguments written to run_game.bat")
-        os.system("run_game.bat")
+        os.system("./script/run_game.bat")
     elif system == "Linux":
         before = (
             f'java '
@@ -202,11 +202,11 @@ def main():
         after = getLowerMinecraftArgvs(MinecraftDir, Version, ID)
         cmd = before + after
 
-        with open("run_game.sh", "w") as sh_file:
+        with open("./script/run_game.sh", "w") as sh_file:
             sh_file.write(cmd)
-        os.chmod("run_game.sh", 0o755)
+        os.chmod("./script/run_game.sh", 0o755)
         print("Command line arguments written to run_game.sh")
-        os.system("./run_game.sh")
+        os.system("./script/run_game.sh")
 
 if __name__ == "__main__":
     main()

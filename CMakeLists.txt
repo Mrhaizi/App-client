@@ -20,16 +20,20 @@ if (WIN32)
     message("windows system")
     set(MYSQL_CONNECTOR_CPP_DIR "C:/Program Files/MySQL/mysql-connector-c++-9.0.0-winx64")
     # set(CMAKE_PREFIX_PATH  "C:/Program Files/MySQL/mysql-connector-c++-9.0.0-winx64/lib/cmake")
-    find_package(Qt5 REQUIRED COMPONENTS Widgets Gui Core)
+    find_package(Qt5 REQUIRED COMPONENTS Widgets Gui Core Network)
+    find_package(mysql-concpp REQUIRED)
     link_directories(${MYSQL_CONNECTOR_CPP_DIR}/lib64/vs14)
 elseif(UNIX)
     set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     message("linux system")
     set(CMAKE_PREFIX_PATH "/opt/Qt5/5.12.12/gcc_64/lib/cmake/Qt5")
-    find_package(Qt5 REQUIRED COMPONENTS Widgets)
+    find_package(Qt5 REQUIRED COMPONENTS Widgets Network)
+    find_package(mysql-concpp REQUIRED)
     include_directories(${Qt5Core_INCLUDE_DIRS})
 endif()
 
+add_subdirectory(function/Communicator)
+add_subdirectory(function/PersonalInfoManager)
 add_subdirectory(function/UserInfoManager)
 add_subdirectory(Windows/RegisterWindow)
 add_subdirectory(Windows/FriendWindow)
@@ -76,6 +80,7 @@ elseif(UNIX)
                                         Qt5::Widgets
                                         Qt5::Core
                                         Qt5::Gui
-                                        UserInfoManager)
+                                        UserInfoManager
+                                        CommunicatorClient)
 endif()
 
