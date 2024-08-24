@@ -1,8 +1,9 @@
 #include "FriendListItem.h"
 
 FriendListItemWindow::FriendListItemWindow(const QString image_path, const QString &name, QWidget *parent) :
-    QWidget(parent),
+    ListItemBase(parent),
     ui_(std::make_shared<Ui::FriendListItemWindow>()) {
+        setItemType(ListItemType::CHAT_USER_ITEM);
         ui_->setupUi(this);
         ui_->label_name->setText(name);
         QPixmap pixmap(image_path);

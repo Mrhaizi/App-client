@@ -38,8 +38,40 @@ void ClientCommunicator::onConnected()
 
 void ClientCommunicator::onReadyRead()
 {
-    QByteArray data = readAll();
-    QString message = QString::fromUtf8(data);
-    emit messageReceived(message);
+    // 当有数据可读时，读取所有数据
+    buffer_.append(socket_.readAll());
+    QDataStream stream(&buffer_, QIODevice::ReadOnly);
+    forever {
+            //先解析头部
+        if(!b_recv_pending_){
+            // 检查缓冲区中的数据是否足够解析出一个消息头（消息ID + 消息长度）
+            if (buffer_.size() < static_cast<int>(sizeof(quint16) * 2)) {
+                return; // 数据不够，等待更多数据
+            }
+
+            // 预读取消息ID和消息长度，但不从缓冲区中移除
+            stream >> message_id_ >> message_len_;
+
+            //将buffer 中的前四个字节移除
+            buffer_ = buffer_.mid(sizeof(quint16) * 2);
+
+            // 输出读取的数据
+            qDebug() << "Message ID:" << message_id_ << ", Length:" << message_len_;
+
+        }
+
+        //buffer剩余长读是否满足消息体长度，不满足则退出继续等待接受
+        if(buffer_.size() < message_len_){
+            b_recv_pending_ = true;
+            return;
+        }
+
+        b_recv_pending_ = false;
+        // 读取消息体
+        QByteArray messageBody = buffer_.mid(0, message_len_);
+        qDebug() << "receive body msg is " << messageBody ;
+
+        buffer_ = buffer_.mid(message_len_);
+    }
 }
 

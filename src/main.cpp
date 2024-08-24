@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
         #ifdef _WIN32
             mysqlInfo = {"tcp://127.0.0.1:3306", "root", "123456", "userdata", "users"};
         #elif defined(__unix__) || defined(__linux__)
-            mysqlInfo = {"tcp://127.0.0.1:3306", "root", "myq", "userdata", "users"};
+            mysqlInfo = {"tcp://127.0.0.1:3306", "root", "myq", "AppInfo", "users"};
         #else
             std::cerr << "Unsupported platform!" << std::endl;
             return 1;

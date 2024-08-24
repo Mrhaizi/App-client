@@ -5,10 +5,12 @@
 #include <memory>
 #include <unordered_map>
 
+#include "CommunicatorClient.h"
+
 struct PersonalPublicInfo {
     std::string name;
     int id;
-    // 以下信心可以选择隐藏
+    // 以下信息可以选择隐藏
     int age;
     std::string address;
     std::string phoneNumber;
@@ -30,7 +32,6 @@ public:
 private:
     std::shared_ptr<PersonalPrivateInfo> private_info_;
     std::shared_ptr<PersonalPublicInfo> public_info_;
-
 };
 
 #endif // PERSONALINFOMANAGER_

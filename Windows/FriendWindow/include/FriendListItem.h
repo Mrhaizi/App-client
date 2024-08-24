@@ -15,12 +15,13 @@
 #include <QFile>
 
 #include "ui_friendlistitem.h"
+#include "ListItemBase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class FriendListItemWindow;} 
 QT_END_NAMESPACE
 
-class FriendListItemWindow : public QWidget {
+class FriendListItemWindow : public ListItemBase {
     Q_OBJECT
 public:
     FriendListItemWindow(const QString image_path, const QString &name, QWidget *parent = nullptr);

@@ -32,5 +32,6 @@ if(WIN32)
                                         UserInfoManager)
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
-                                        UserInfoManager)
+                                        UserInfoManager
+                                        ListItemBase)
 endif()
