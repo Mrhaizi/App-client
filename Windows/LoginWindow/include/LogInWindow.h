@@ -17,6 +17,7 @@
 #include "RegisterWindow.h"
 #include "ui_new_login.h"
 #include "HomeWindow.h"
+#include "CommunicatorClient.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class LoginWindow;}
@@ -25,7 +26,7 @@ QT_END_NAMESPACE
 class LoginWindow : public QWidget {
     Q_OBJECT
 public:
-    LoginWindow(QWidget *parent = nullptr, std::shared_ptr<UserInfoManager> infomysql = nullptr);
+    LoginWindow(QWidget *parent = nullptr, std::shared_ptr<UserInfoManager> infomysql = nullptr, std::shared_ptr<ClientCommunicator> clientcommunicator = nullptr);
     ~LoginWindow() = default;
     void applyStylesheet(const QString &qssFile);
 private slots:
@@ -38,6 +39,7 @@ private:
     std::shared_ptr<Ui::LoginWindow> ui_;
     std::shared_ptr<UserInfoManager> userinfomanager_;
     HomeWindow *homewindow_;
+    std::shared_ptr<ClientCommunicator> clientcommunicator_;
 };
 
 #endif //LOGINUI_H

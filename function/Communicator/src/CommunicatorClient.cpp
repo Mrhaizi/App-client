@@ -1,8 +1,9 @@
 #include "CommunicatorClient.h"
 
-ClientCommunicator::ClientCommunicator(QObject *parent)
-    : QTcpSocket(parent)
-{
+ClientCommunicator::ClientCommunicator(QObject *parent, const quint16 &port, const QString &ip) 
+    : QTcpSocket(parent),
+    port_(port),
+    host_(ip) {
     connect(this, &QTcpSocket::connected, this, &ClientCommunicator::onConnected);
     connect(this, &QTcpSocket::readyRead, this, &ClientCommunicator::onReadyRead);
 }
@@ -15,6 +16,7 @@ ClientCommunicator::~ClientCommunicator()
     }
 }
 
+
 void ClientCommunicator::connectToHost(const QString &host, quint16 port)
 {   //此方法非阻塞，会立即返回，连接的结果会通过 connected 信号通知。
     QTcpSocket::connectToHost(host, port);
@@ -22,18 +24,27 @@ void ClientCommunicator::connectToHost(const QString &host, quint16 port)
 
 void ClientCommunicator::sendMessage(const QString &message)
 {
-    if (state() == QAbstractSocket::ConnectedState) {
-        write(message.toUtf8());
-        flush();  // 确保数据立即发送
+    if (socket_.state() == QAbstractSocket::ConnectedState) {
+        QByteArray byteArray;
+        QDataStream stream(&byteArray, QIODevice::WriteOnly);
+
+        stream << quint16(0); // 占位符，用于后续填充消息长度
+        stream << message;    // 消息内容
+
+        stream.device()->seek(0);
+        stream << quint16(byteArray.size() - sizeof(quint16)); // 填充实际的消息长度
+
+        socket_.write(byteArray);
+        socket_.flush();
     } else {
-        qWarning("Not connected to host.");
+        qDebug() << "Not connected!";
     }
 }
 
 void ClientCommunicator::onConnected()
 {
     qDebug("Connected to server.");
-    sendMessage("hello");
+    sendMessage("hello,connect successfully");
 }
 
 void ClientCommunicator::onReadyRead()
@@ -54,10 +65,6 @@ void ClientCommunicator::onReadyRead()
 
             //将buffer 中的前四个字节移除
             buffer_ = buffer_.mid(sizeof(quint16) * 2);
-
-            // 输出读取的数据
-            qDebug() << "Message ID:" << message_id_ << ", Length:" << message_len_;
-
         }
 
         //buffer剩余长读是否满足消息体长度，不满足则退出继续等待接受
@@ -69,9 +76,9 @@ void ClientCommunicator::onReadyRead()
         b_recv_pending_ = false;
         // 读取消息体
         QByteArray messageBody = buffer_.mid(0, message_len_);
-        qDebug() << "receive body msg is " << messageBody ;
-
+        // 清空缓存
         buffer_ = buffer_.mid(message_len_);
+        emit messageReceived(messageBody);
     }
 }
 

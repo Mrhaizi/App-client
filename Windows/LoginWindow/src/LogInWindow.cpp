@@ -1,10 +1,11 @@
 #include "LogInWindow.h"
 #include "HomeWindow.h"
 
-LoginWindow::LoginWindow(QWidget *parent, std::shared_ptr<UserInfoManager> userinfomanager)
-    : QWidget(parent)
-    , ui_(std::make_shared<Ui::LoginWindow>())
-    , userinfomanager_(userinfomanager)
+LoginWindow::LoginWindow(QWidget *parent, std::shared_ptr<UserInfoManager> userinfomanager, std::shared_ptr<ClientCommunicator> clientcommunicator)
+    : QWidget(parent),
+    ui_(std::make_shared<Ui::LoginWindow>()),
+    userinfomanager_(userinfomanager),
+    clientcommunicator_(clientcommunicator)
 {
     ui_->setupUi(this);
     connect(ui_->pushButton_login, &QPushButton::clicked, this, &LoginWindow::loginButtonClicked);

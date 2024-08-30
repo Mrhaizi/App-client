@@ -7,16 +7,21 @@
 #include <QString>
 #include <QObject>
 
+#include <nlohmann/json.hpp>
+
+#include "Message.h"
+
+
 class ClientCommunicator : public QTcpSocket
 {
     Q_OBJECT
 public:
-    explicit ClientCommunicator(QObject *parent = nullptr);
+    explicit ClientCommunicator(QObject *parent = nullptr, const quint16 &port = 0, const QString &ip = "");
     ~ClientCommunicator();
 
     void connectToHost(const QString &host, quint16 port);
-    void sendMessage(const QString &message);
     
+    void sendMessage(const QString &message);
 signals:
     void messageReceived(const QString &message);
 

@@ -25,6 +25,9 @@ class FriendListItemWindow : public ListItemBase {
     Q_OBJECT
 public:
     FriendListItemWindow(const QString image_path, const QString &name, QWidget *parent = nullptr);
+    QSize sizeHint() const override {
+        return QSize(200, 100);
+    };
 private:
     QLabel *image_label;
     QLabel *name_label;
