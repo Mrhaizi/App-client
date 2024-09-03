@@ -13,11 +13,13 @@
 #include <QtWidgets/QMessageBox>
 #include <QFile>
 
-#include "UserInfoManager.h"
+#include "PersonManager.h"
 #include "RegisterWindow.h"
 #include "ui_new_login.h"
-#include "HomeWindow.h"
 #include "CommunicatorClient.h"
+#include "HomeWindow.h"
+#include "LoginMessage.h"
+#include "nlohmann/json.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class LoginWindow;}
@@ -26,18 +28,16 @@ QT_END_NAMESPACE
 class LoginWindow : public QWidget {
     Q_OBJECT
 public:
-    LoginWindow(QWidget *parent = nullptr, std::shared_ptr<UserInfoManager> infomysql = nullptr, std::shared_ptr<ClientCommunicator> clientcommunicator = nullptr);
+    LoginWindow(QWidget *parent = nullptr, std::shared_ptr<ClientCommunicator> clientcommunicator = nullptr);
     ~LoginWindow() = default;
     void applyStylesheet(const QString &qssFile);
 private slots:
-
+    void onLoginResponseReceived(const QString &message);
     void loginButtonClicked();
     void registerButtonClicked();
-
-
 private:
     std::shared_ptr<Ui::LoginWindow> ui_;
-    std::shared_ptr<UserInfoManager> userinfomanager_;
+    std::shared_ptr<PersonManager> personmanager_;
     HomeWindow *homewindow_;
     std::shared_ptr<ClientCommunicator> clientcommunicator_;
 };

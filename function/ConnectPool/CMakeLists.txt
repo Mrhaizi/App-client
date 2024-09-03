@@ -13,10 +13,6 @@ add_library(${PROJECT_NAME} STATIC ${SRC})
 target_include_directories(${PROJECT_NAME} PUBLIC include)
 if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONNECTOR_CPP_DIR}/include)
-    target_link_libraries(${PROJECT_NAME} PUBLIC 
-                                        Qt5::Widgets
-                                        Qt5::Core
-                                        Qt5::Gui)
 elseif(UNIX)
         target_link_libraries(${PROJECT_NAME} PRIVATE 
                                         Qt5::Network

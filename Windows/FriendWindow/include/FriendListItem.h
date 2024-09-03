@@ -13,6 +13,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QMessageBox>
 #include <QFile>
+#include <QString>
 
 #include "ui_friendlistitem.h"
 #include "ListItemBase.h"
@@ -27,10 +28,10 @@ public:
     FriendListItemWindow(const QString image_path, const QString &name, QWidget *parent = nullptr);
     QSize sizeHint() const override {
         return QSize(200, 100);
+
     };
+    QString getName();
 private:
-    QLabel *image_label;
-    QLabel *name_label;
     std::shared_ptr<Ui::FriendListItemWindow> ui_;
 };
 

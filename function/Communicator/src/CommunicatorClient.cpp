@@ -1,6 +1,6 @@
 #include "CommunicatorClient.h"
 
-ClientCommunicator::ClientCommunicator(QObject *parent, const quint16 &port, const QString &ip) 
+ClientCommunicator::ClientCommunicator(QObject *parent, const int &port, const std::string &ip) 
     : QTcpSocket(parent),
     port_(port),
     host_(ip) {
@@ -24,7 +24,7 @@ void ClientCommunicator::connectToHost(const QString &host, quint16 port)
 
 void ClientCommunicator::sendMessage(const QString &message)
 {
-    if (socket_.state() == QAbstractSocket::ConnectedState) {
+    if (this->state() == QAbstractSocket::ConnectedState) {
         QByteArray byteArray;
         QDataStream stream(&byteArray, QIODevice::WriteOnly);
 
@@ -34,8 +34,8 @@ void ClientCommunicator::sendMessage(const QString &message)
         stream.device()->seek(0);
         stream << quint16(byteArray.size() - sizeof(quint16)); // 填充实际的消息长度
 
-        socket_.write(byteArray);
-        socket_.flush();
+        this->write(byteArray);
+        this->flush();
     } else {
         qDebug() << "Not connected!";
     }
@@ -50,7 +50,7 @@ void ClientCommunicator::onConnected()
 void ClientCommunicator::onReadyRead()
 {
     // 当有数据可读时，读取所有数据
-    buffer_.append(socket_.readAll());
+    buffer_.append(this->readAll());
     QDataStream stream(&buffer_, QIODevice::ReadOnly);
     forever {
             //先解析头部

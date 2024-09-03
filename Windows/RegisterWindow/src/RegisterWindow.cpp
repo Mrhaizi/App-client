@@ -1,6 +1,6 @@
 ﻿#include "RegisterWindow.h"
-RegisterWindow::RegisterWindow(QWidget *parent, std::shared_ptr<UserInfoManager> userinfomanager)
-                                 : infomanager_(userinfomanager) , 
+RegisterWindow::RegisterWindow(QWidget *parent, std::shared_ptr<PersonManager> personmanager)
+                                 : infomanager_(personmanager) , 
                                     ui_(std::make_shared<Ui::RegisterWindow>()) 
                                     {
                                     ui_->setupUi(this);
@@ -18,13 +18,13 @@ void RegisterWindow::registerUserInfo() {
         return;
     }
     // 检查用户名是否已存在
-    if (infomanager_->fetchUserName(username.toStdString())) {
-        QMessageBox::warning(this, "Register", "your username had been used");
-        return;
-    }
-    // 注册用户信息
-    infomanager_->registerUserInfo(username.toStdString(), password.toStdString());
-    QMessageBox::information(this, "Register", "registe successfully");
+    // if (infomanager_->fetchUserName(username.toStdString())) {
+    //     QMessageBox::warning(this, "Register", "your username had been used");
+    //     return;
+    // }
+    // // 注册用户信息
+    // infomanager_->registerUserInfo(username.toStdString(), password.toStdString());
+    // QMessageBox::information(this, "Register", "registe successfully");
 }
 
 // void RegisterWindow::backLoginWindow() {

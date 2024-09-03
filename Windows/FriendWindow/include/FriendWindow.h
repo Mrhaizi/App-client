@@ -2,6 +2,7 @@
 #define FRIENDWINDOW_H
 
 #include <iostream>
+#include <qlist.h>
 #include <string>
 #include <memory>
 
@@ -16,9 +17,11 @@
 #include <QtWidgets/QMenu>
 
 #include "ui_friendwindow.h"
-#include "UserInfoManager.h"
+#include "CommunicatorClient.h"
 #include "FriendListItem.h"
-#include "ConnectPool.h"
+#include "global.h"
+#include "ChatMessage.h"
+#include "PersonManager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class FriendWindow;}
@@ -27,7 +30,7 @@ QT_END_NAMESPACE
 class FriendWindow : public QWidget {
     Q_OBJECT
 public:
-    FriendWindow(QWidget *parent = nullptr, std::shared_ptr<UserInfoManager> userInfoManager = nullptr, std::shared_ptr<ClientCommunicator> clientCommunicator = nullptr);
+    FriendWindow(QWidget *parent = nullptr, std::shared_ptr<PersonManager> userInfoManager = nullptr, std::shared_ptr<ClientCommunicator> clientCommunicator = nullptr);
     ~FriendWindow() = default;
     void updateChatWindow();
     void initFriendList();
@@ -36,11 +39,13 @@ private slots:
     void showContextMenu(const QPoint &point);
     void saveChatHistory();
     void updateFriendList();
+    void chooseChatObject(QListWidgetItem *item);
 private:
     void loatFriendData();
     std::shared_ptr<Ui::FriendWindow> ui_;
-    std::shared_ptr<UserInfoManager>  userinfomanager_;    
+    std::shared_ptr<PersonManager> personalinfomanager_;    
     std::shared_ptr<ClientCommunicator> clientcommunicator_;
+    PersonalPublicInfo chatobject_;
 };
 
 #endif // FRIENDWINDOW_H

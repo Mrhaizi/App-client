@@ -9,14 +9,15 @@
 
 #include <nlohmann/json.hpp>
 
-#include "Message.h"
+#include "ChatMessage.h"
+
 
 
 class ClientCommunicator : public QTcpSocket
 {
     Q_OBJECT
 public:
-    explicit ClientCommunicator(QObject *parent = nullptr, const quint16 &port = 0, const QString &ip = "");
+    explicit ClientCommunicator(QObject *parent = nullptr, const int &port = 0, const std::string &ip = "");
     ~ClientCommunicator();
 
     void connectToHost(const QString &host, quint16 port);
@@ -24,14 +25,12 @@ public:
     void sendMessage(const QString &message);
 signals:
     void messageReceived(const QString &message);
-
 private slots:
     void onConnected();
     void onReadyRead();
 private:
-    QTcpSocket socket_;
-    QString host_;
-    uint16_t port_;
+    std::string host_;
+    int port_;
     QByteArray buffer_;
     bool b_recv_pending_;
     quint16 message_id_;

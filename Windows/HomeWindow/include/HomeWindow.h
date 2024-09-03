@@ -23,7 +23,7 @@ QT_END_NAMESPACE
 class HomeWindow : public QWidget {
     Q_OBJECT
 public:
-    HomeWindow(QWidget *parent = nullptr, std::shared_ptr<UserInfoManager> userinfomanager = nullptr);
+    HomeWindow(QWidget *parent = nullptr, std::shared_ptr<PersonManager> personmanager = nullptr);
     ~HomeWindow() = default;
     
     void initAllWindow();
@@ -38,7 +38,7 @@ private slots:
 public:
     std::shared_ptr<Ui::HomeWindow>  ui_;
     FriendWindow *friendwindow_;
-    std::shared_ptr<UserInfoManager> userinfomanager_;
+    std::shared_ptr<PersonManager> personmanager_;
     // std::shared_ptr<FriendWindow> friendwidow_;
 };
 

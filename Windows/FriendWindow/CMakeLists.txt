@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 project(FriendWindow)
 
-
 # 收集源文件
 file(GLOB_RECURSE SRC src/*.cpp)
 
@@ -29,13 +28,13 @@ if(WIN32)
                                         Qt5::Widgets
                                         Qt5::Core
                                         Qt5::Gui
-                                        UserInfoManager
+                                        PersonManager
                                         ListItemBase
                                         ConnectPool
                                         )
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
-                                        UserInfoManager
+                                        PersonManager
                                         ListItemBase
                                         ConnectPool
                                         )

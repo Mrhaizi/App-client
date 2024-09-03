@@ -12,7 +12,7 @@
 #include <QtWidgets/QWidget>
 #include <QtWidgets/QMessageBox>
 
-#include "UserInfoManager.h"
+#include "PersonManager.h"
 #include "ui_register.h"
 // #include "LogInUi.h"
 
@@ -23,13 +23,13 @@ QT_END_NAMESPACE
 class RegisterWindow : public QWidget {
     Q_OBJECT
 public:
-    RegisterWindow(QWidget *parent, std::shared_ptr<UserInfoManager> userinfomanager = nullptr);
+    RegisterWindow(QWidget *parent, std::shared_ptr<PersonManager> personmanager = nullptr);
     ~RegisterWindow() = default;
 private slots:
     void registerUserInfo();
     // void backLoginWindow();
 private:
-    std::shared_ptr<UserInfoManager> infomanager_;
+    std::shared_ptr<PersonManager> infomanager_;
     std::shared_ptr<Ui::RegisterWindow> ui_;
 };
 

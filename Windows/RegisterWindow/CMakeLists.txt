@@ -30,8 +30,8 @@ if(WIN32)
                                         Qt5::Widgets
                                         Qt5::Core
                                         Qt5::Gui
-                                        UserInfoManager)
+                                        PersonManager)
 elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
-                                        UserInfoManager)
+                                        PersonManager)
 endif()

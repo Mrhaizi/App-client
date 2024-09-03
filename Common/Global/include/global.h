@@ -4,26 +4,55 @@
 #include <functional>
 #include <QObject>
 
+#include <nlohmann/json.hpp>
 
 extern std::function<void(QWidget*)> repolish;
 
-enum MessageId{
-    ID_GET_VARIFY_CODE_REQUEST = 1001, //获取验证码请求
-    ID_GET_VARIFY_CODE_RESPONE = 1002, //获取验证码请求
-    ID_REGIST_USER_REQUEST = 1003, //注册用户请求
-    ID_REGIST_USER_RESPONE = 1004, //注册用户响应
-    ID_LOGIN_USER_REQUEST = 1005, //用户登录请求
-    ID_LOGIN_USER_RESPONE = 1006, //用户登录回应
+enum class ListItemType {
+    ChatUserItem,      // 聊天用户
+    SearchUserItem,    // 搜索到的用户
+    AddUserTipItem,    // 提示添加用户
+    InvalidItem,       // 不可点击条目
+    GroupTipItem,      // 分组提示条目
+    LineItem,          // 分割线
+    ApplyFriendItem    // 好友申请
 };
 
-enum ListItemType{
-    CHAT_USER_ITEM, //聊天用户
-    SEARCH_USER_ITEM, //搜索到的用户
-    ADD_USER_TIP_ITEM, //提示添加用户
-    INVALID_ITEM,  //不可点击条目
-    GROUP_TIP_ITEM, //分组提示条目
-    LINE_ITEM,  //分割线
-    APPLY_FRIEND_ITEM, //好友申请
+enum class MessageStatus {
+    Created, // 消息已经创建
+    PendingSend, // 准备发送
+    Sent, // 已经发送
+    Received, // 已经收到
+    PendingProcess, // 准备处理
+    Processing, // 正在处理
+    Processed, // 处理完成
+    SendFailed, // 发送失败
+    ReceiveFailed, // 接收失败
+    ProcessingError, // 处理失败
+    Acknowledged, // 确认
+    AckTimeout // 确认超时
+};
+
+enum class ContentType { Text};
+
+struct PersonalPublicInfo {
+    std::string username;
+    int id;
+    std::string email;
+    int age;
+    friend void to_json(nlohmann::json& j, const PersonalPublicInfo& p) {
+        j = nlohmann::json{{"username", p.username}, {"age", p.age}, {"email", p.email}, {"id", p.id}};
+    }
+    friend void from_json(const nlohmann::json& j, PersonalPublicInfo& p) {
+        j.at("username").get_to(p.username);
+        j.at("age").get_to(p.age);
+        j.at("email").get_to(p.email);
+        j.at("id").get_to(p.id);
+    }
+};
+struct PersonalPrivateInfo {
+    std::string password;
+    std::unordered_map<std::string, PersonalPublicInfo> friend_list;
 };
 
 

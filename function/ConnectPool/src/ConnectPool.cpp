@@ -5,9 +5,13 @@ ConnectPool::ConnectPool(const int &poolsize, const std::string &ip, const int &
     server_port_(port),
     pool_size_(poolsize) {
     for (int i = 0; i < pool_size_; ++i) {
-        auto socket = std::make_shared<ClientCommunicator>();
+        auto socket = std::make_shared<ClientCommunicator>(nullptr, server_port_, server_ip_);
         connections_.push(socket);
     }
+}
+ConnectPool& ConnectPool::getInstance(const std::string &ip, const int &port, const int &poolsize) {
+    static ConnectPool instance(poolsize,ip, port);
+    return instance;
 }
 
 std::shared_ptr<ClientCommunicator> ConnectPool::getConnection(const int &timeout)  {
@@ -20,8 +24,6 @@ std::shared_ptr<ClientCommunicator> ConnectPool::getConnection(const int &timeou
         return nullptr;
     }
 }
-
-
 void ConnectPool::releaseConnection(std::shared_ptr<ClientCommunicator> connection) {
     std::unique_lock<std::mutex> lock(mutex_);
     connections_.push(connection);

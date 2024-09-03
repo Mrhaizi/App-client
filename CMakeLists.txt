@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
 project(App)
 
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -33,10 +34,10 @@ endif()
 add_subdirectory(Common/Global)
 add_subdirectory(Common/ListItemBase)
 add_subdirectory(Common/Message)
+add_subdirectory(function/ServerConfigManager)
 add_subdirectory(function/Communicator)
 add_subdirectory(function/ConnectPool)
-add_subdirectory(function/PersonalInfoManager)
-add_subdirectory(function/UserInfoManager)
+add_subdirectory(function/PersonManager)
 add_subdirectory(Windows/RegisterWindow)
 add_subdirectory(Windows/FriendWindow)
 add_subdirectory(Windows/GroupWindow)
@@ -57,10 +58,10 @@ if(WIN32)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
                                         LoginWindow
                                         HomeWindow
-                                        UserInfoManager
                                         Qt5::Widgets
                                         Qt5::Gui
-                                        Qt5::Core)
+                                        Qt5::Core
+                                        PersonManager)
     #合并后的自定义命令
     add_custom_command(TARGET App POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -82,7 +83,10 @@ elseif(UNIX)
                                         Qt5::Widgets
                                         Qt5::Core
                                         Qt5::Gui
-                                        UserInfoManager
-                                        CommunicatorClient)
+                                        PersonManager
+                                        mysql::concpp-jdbc
+                                        ConnectPool
+                                        ServerConfigManager
+                                    )
 endif()
 
