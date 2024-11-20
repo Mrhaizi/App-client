@@ -14,7 +14,6 @@
 #include <QFile>
 
 #include "PersonManager.h"
-#include "RegisterWindow.h"
 #include "ui_new_login.h"
 #include "CommunicatorClient.h"
 #include "HomeWindow.h"
@@ -31,15 +30,27 @@ public:
     LoginWindow(QWidget *parent = nullptr, std::shared_ptr<ClientCommunicator> clientcommunicator = nullptr);
     ~LoginWindow() = default;
     void applyStylesheet(const QString &qssFile);
+    bool checkUserValid();
+    bool checkPwdValid();
+
 private slots:
     void onLoginResponseReceived(const QString &message);
     void loginButtonClicked();
     void registerButtonClicked();
+    void onCacheInfoReceived(const QString& mesage);
+    void slot_login_mod_finish(ReqId id, QString res, ErrorCodes err);
+    void changePage();
 private:
+    void showTip(QString str,bool b_ok);
+    void addTipErr(TipErr te,QString tips);
+    void delTipErr(TipErr te);
+    void initHttpHandlers();
     std::shared_ptr<Ui::LoginWindow> ui_;
     std::shared_ptr<PersonManager> personmanager_;
     HomeWindow *homewindow_;
     std::shared_ptr<ClientCommunicator> clientcommunicator_;
+    QMap<ReqId, std::function<void(const QJsonObject&)>> handlers_;
+    QMap<TipErr, QString> tip_errs_;
 };
 
 #endif //LOGINUI_H

@@ -11,6 +11,7 @@
 #include <thread>
 
 #include "CommunicatorClient.h"
+#include "ConnectPool.h"
 
 class ConnectPool
 {

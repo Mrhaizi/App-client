@@ -22,7 +22,7 @@ private:
 class ServerConfigManager {
 public:
     static ServerConfigManager& getInstance() {
-        static ServerConfigManager instance("192.168.1.1", 12345); // 默认IP和端口
+        static ServerConfigManager instance("myqzyx.cn", 8989); // 默认IP和端口
         return instance;
     }
 

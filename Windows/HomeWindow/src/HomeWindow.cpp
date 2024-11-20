@@ -1,20 +1,22 @@
+#include "AddressBookWindow.h"
 #include <HomeWindow.h>
 
-HomeWindow::HomeWindow(QWidget *Parent, std::shared_ptr<PersonManager> personmanager) 
+HomeWindow::HomeWindow(QWidget *parent, ClientCommunicator::ptr clientcommunicator) 
     : ui_(std::make_shared<Ui::HomeWindow>()),
-      personmanager_(personmanager),
-      QWidget(Parent) 
+      clientcommunicator_(clientcommunicator),
+      QWidget(parent)
     {
 
         ui_->setupUi(this);
         initAllWindow();
-        connect(ui_->pushButton_friend, &QPushButton::clicked, this, &HomeWindow::showFriendWindow);
+        connect(ui_->pushButton_addressbook, &QPushButton::clicked, this, &HomeWindow::showAddressBookWindow);
+        connect(ui_->pushButton_chat, &QPushButton::clicked, this, &HomeWindow::showChatWindow);
         connect(ui_->pushButton_play_game, &QPushButton::clicked, this, &HomeWindow::showPlayGameWindow);
     }
 
-void HomeWindow::showFriendWindow() {
+void HomeWindow::showAddressBookWindow() {
     
-    ui_->stackedWidget_run_function->setCurrentWidget(friendwindow_);
+    ui_->stackedWidget_run_function->setCurrentWidget(addressbookwindow_);
     // if (chatwindow_ != nullptr) {
     //     chatwindow_ = nullptr;
     // }
@@ -28,12 +30,14 @@ void HomeWindow::showPlayGameWindow() {
 }
 
 void HomeWindow::initAllWindow() {
-    friendwindow_ = new FriendWindow(nullptr, personmanager_);
-    ui_->stackedWidget_run_function->addWidget(friendwindow_);
+    chatwindow_ = new ChatWindow(nullptr, clientcommunicator_);
+    addressbookwindow_ = new AddressBookWindow(nullptr);
+    ui_->stackedWidget_run_function->addWidget(chatwindow_);
+    ui_->stackedWidget_run_function->addWidget(addressbookwindow_);
 }
 
-void HomeWindow::showGroupWindow() {
-
+void HomeWindow::showChatWindow() {
+    ui_->stackedWidget_run_function->setCurrentWidget(chatwindow_);
 }
 
 void HomeWindow::showShopWindow() {

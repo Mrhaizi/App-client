@@ -15,7 +15,7 @@ if(WIN32)
     target_include_directories(${PROJECT_NAME} PUBLIC ${MYSQL_CONNECTOR_CPP_DIR}/include)
 elseif(UNIX)
         target_link_libraries(${PROJECT_NAME} PRIVATE 
-                                        Qt5::Network
-                                        CommunicatorClient)
-
+                                        Qt6::Network
+                                        CommunicatorClient
+                                    )
 endif()

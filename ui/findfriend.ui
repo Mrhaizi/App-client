@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FindWindow</class>
+ <widget class="QWidget" name="FindWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>全网搜索</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLineEdit" name="lineEdit_search">
+     <property name="placeholderText">
+      <string>输入搜索关键词</string>
+     </property>
+     <property name="clearButtonEnabled">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="tabPosition">
+      <enum>QTabWidget::North</enum>
+     </property>
+     <widget class="QWidget" name="tabWidget_all">
+      <attribute name="title">
+       <string>全部</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_tab_all">
+       <item>
+        <widget class="QListWidget" name="listWidget_all"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabWidget_user">
+      <attribute name="title">
+       <string>用户</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_tab_user">
+       <item>
+        <widget class="QListWidget" name="listWidget_user"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabWidget_group">
+      <attribute name="title">
+       <string>群聊</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_tab_group">
+       <item>
+        <widget class="QListWidget" name="listWidget_group"/>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_empty" native="true">
+         <layout class="QVBoxLayout" name="verticalLayout_widget_empty">
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_icon">
+            <property name="pixmap">
+             <pixmap>icon.png</pixmap>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_text">
+            <property name="text">
+             <string>输入关键词搜索</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_bottom">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabWidget_robot">
+      <attribute name="title">
+       <string>机器人</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_tab_robot">
+       <item>
+        <widget class="QListWidget" name="listWidget_robot"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -14,7 +14,8 @@
 #include <QFile>
 
 #include "ui_homewindow.h"
-#include "FriendWindow.h"
+#include "ChatWindow.h"
+#include "AddressBookWindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class HomeWindow;}
@@ -23,23 +24,24 @@ QT_END_NAMESPACE
 class HomeWindow : public QWidget {
     Q_OBJECT
 public:
-    HomeWindow(QWidget *parent = nullptr, std::shared_ptr<PersonManager> personmanager = nullptr);
+    HomeWindow(QWidget *parent = nullptr, ClientCommunicator::ptr clientcommunicator = nullptr);
     ~HomeWindow() = default;
     
     void initAllWindow();
 private slots:
     void showPlayGameWindow();
-    void showFriendWindow();
-    void showGroupWindow();
+    void showAddressBookWindow();
+    void showChatWindow();
     void showCommunityWindow();
     void showShopWindow();
     void showSettingWindow();
     
 public:
     std::shared_ptr<Ui::HomeWindow>  ui_;
-    FriendWindow *friendwindow_;
-    std::shared_ptr<PersonManager> personmanager_;
+    ChatWindow* chatwindow_;
+    AddressBookWindow* addressbookwindow_;
     // std::shared_ptr<FriendWindow> friendwidow_;
+    ClientCommunicator::ptr clientcommunicator_;
 };
 
 #endif // HOMEWINDOW_H
