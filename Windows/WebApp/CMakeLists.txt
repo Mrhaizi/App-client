@@ -37,6 +37,12 @@ elseif(UNIX)
                                         PersonManager
                                         MessagePackage
                                         HttpManager
+                                        Qt6::Widgets
+                                        Qt6::Core
+                                        Qt6::Gui
+                                        Qt6::WebEngineWidgets
+                                        Global
+                                        PersonManager
                                         LoginWindow)
 
 endif()

@@ -4,6 +4,8 @@
 #include <functional>
 #include <QObject>
 #include <QtWidgets/QStyle>
+#include <QJsonObject>
+#include <QJsonArray>
 #include <nlohmann/json.hpp>
 
 extern std::function<void(QWidget*)> repolish;
@@ -34,7 +36,7 @@ enum class MessageStatus {
 enum ErrorCodes{
     SUCCESS = 0,
     ERR_JSON = 1, //Json解析失败
-    ERR_NETWORK = 2,
+    NETWORK_ERROR,
 };
 
 enum ReqId{
@@ -60,6 +62,22 @@ enum Modules{
     REGISTERMOD = 0,
     RESETMOD = 1,
     LOGINMOD = 2,
+    APPLY_TITLE_MOD,
+    APPROVE_TITLE_MOD,
+    PUBLISH_POST_MOD,
+    DELETE_POST_MOD,
+    REVIEW_POST_MOD,
+    REMOVE_TITLE_FROM_POST_MOD,
+    FOLLOW_USER_MOD,
+    GET_FOLLOWINGS_MOD,
+    GET_POSTS_MOD,
+    SEARCH_TITLES_MOD,
+    GET_POSTS_UNDER_TITLE_MOD,
+    CREATE_CATEGORY_MOD,
+    DELETE_CATEGORY_MOD,
+    ASSIGN_POST_TO_CATEGORY_MOD,
+    GET_CATEGORIES_UNDER_TITLE_MOD,
+    GET_POSTS_UNDER_CATEGORY_MOD,
 };
 enum TipErr{
     TIP_SUCCESS = 0,

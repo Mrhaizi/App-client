@@ -13,6 +13,7 @@
 #include <QtWidgets/QMessageBox>
 #include <QFile>
 
+#include "CommunityMainWindow.h"
 #include "ui_homewindow.h"
 #include "ChatWindow.h"
 #include "AddressBookWindow.h"
@@ -26,6 +27,7 @@ class HomeWindow : public QWidget {
 public:
     HomeWindow(QWidget *parent = nullptr, ClientCommunicator::ptr clientcommunicator = nullptr);
     ~HomeWindow() = default;
+    void init();
     
     void initAllWindow();
 private slots:
@@ -39,6 +41,7 @@ private slots:
 public:
     std::shared_ptr<Ui::HomeWindow>  ui_;
     ChatWindow* chatwindow_;
+    CommunityMainWindow* communitymainwindow_;
     AddressBookWindow* addressbookwindow_;
     // std::shared_ptr<FriendWindow> friendwidow_;
     ClientCommunicator::ptr clientcommunicator_;

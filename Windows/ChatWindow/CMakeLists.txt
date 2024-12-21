@@ -37,5 +37,6 @@ elseif(UNIX)
                                         ListItemBase
                                         ConnectPool
                                         ServerConfigManager
+                                        WebSocketManager
                                         )
 endif()

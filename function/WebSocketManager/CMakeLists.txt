@@ -37,6 +37,7 @@ elseif(UNIX)
                                         Qt6::Core
                                         Qt6::Network
                                         Qt6::WebSockets
+                                        PersonManager
                                         Global
                                         )
 endif()

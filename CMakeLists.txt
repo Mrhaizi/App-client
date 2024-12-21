@@ -51,6 +51,9 @@ add_subdirectory(Windows/ChatWindow)
 add_subdirectory(Windows/PlayGameWindow)
 add_subdirectory(Windows/HomeWindow)
 add_subdirectory(Windows/AddressBookWindow)
+add_subdirectory(Windows/CommunityWindow)
+add_subdirectory(Windows/WebApp)
+
 
 
 file(GLOB_RECURSE QRC_FILES 

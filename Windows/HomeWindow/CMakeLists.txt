@@ -36,5 +36,6 @@ elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PUBLIC 
                                         PersonManager
                                         ChatWindow
-                                        AddressBookWindow)
+                                        AddressBookWindow
+                                        CommunityWindow)
 endif()

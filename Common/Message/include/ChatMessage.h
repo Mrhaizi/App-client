@@ -1,29 +1,3 @@
-// #ifndef MESSAGE_H
-// #define MESSAGE_H
-
-// #include <cstdint>
-// #include <iostream>
-// #include <string>
-
-// #include "MessageBase.h"
-// #include "glob.h"
-// #include "nlohmann/json.hpp"
-
-// class ChatMessage : public MessageBase {
-// public:
-// ChatMessage(const std::string &content, const std::string &sender, const std::string &receiver,
-//             uint64_t uid_re, uint64_t uid_sen);
-//     std::string getType() const override;
-//     nlohmann::json toJson() const override;
-//     void castFromString(const std::string& source);
-// private:
-//     std::string content_;
-//     std::string sender_;
-//     std::string receiver_;
-//     uint64_t uid_receiver_;
-//     uint64_t uid_sender_;
-// };
-// #endif // MESSAGE_H
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
@@ -32,11 +6,14 @@
 #include "nlohmann/json.hpp"
 #include <cstdint>
 
+#include <QJsonObject>
+
 
 using nlohmann::json;
 class ChatMessage : public MessageBase {
 public:
     struct Info {
+        std::string time;
         std::string content;
         std::string sender;
         std::string receiver;
@@ -62,14 +39,20 @@ public:
     ChatMessage(const std::string &content = "", const std::string &sender = "", const std::string &receiver = "",
                 uint64_t uid_re = 0, uint64_t uid_sen = 0);
     void printMessage();
+    std::string getConent() const;
     std::string getType() const override;
     nlohmann::json toJson() const override;
     void castFromString(const std::string& source) override;
-    uint64_t getUidSender() {return info_.uid_sender;}
+    void castFromJsonObject(const QJsonObject& msg);
+    uint64_t getUidSender() const {return info_.uid_sender;}
     uint64_t getUidReceiver() {return info_.uid_receiver;}
-    std::string getConent() {return info_.content;}
+    bool isSendByUser() const {return is_sendbyuser;}
+    void setSendByUser(bool value) {is_sendbyuser = value;}
+    void setContent(const std::string& content);
+    void setTimestamp(const std::string& time);
 private:
     Info info_;
+    bool is_sendbyuser;
 };
 
 class AddFriendRequestMessage : public MessageBase {

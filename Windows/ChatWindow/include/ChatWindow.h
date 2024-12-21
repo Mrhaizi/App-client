@@ -25,6 +25,8 @@
 #include "PersonManager.h"
 #include "ConnectPool.h"
 #include "ServerConfigManager.h"
+#include "WebSocketMgr.h"
+#include "MessageMgr.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {class ChatWindow;}
@@ -36,24 +38,32 @@ public:
     ChatWindow(QWidget *parent = nullptr, std::shared_ptr<ClientCommunicator> clientCommunicator = nullptr);
     ~ChatWindow() = default;
     void updateChatWindow();
-    void initFriendList();
-
+    void init();
 signals:
     void haveMsg(const QString &text, bool isSentByUser);
 private slots:
     void sendMsg();
-    void showContextMenu(const QPoint &point);
-    void receiveMsg(const QString &message);
+    void machineMsg(const QJsonObject& msg);
+    void showContextMenu(const QPoint& point);
     void saveChatHistory();
     void updateFriendList();
-    void chooseChatObject(QListWidgetItem *item);
-    void addMsg(const QString &text, bool isSentByUser);
+    void addtextMsg(const QString &text, bool isSentByUser);
+    void handlePrivateMessage(uint64_t userId, const ChatMessage &msg);
+    void handleGroupMessage(uint64_t groupId, const ChatMessage &msg);
+    void switchChatObject(QListWidgetItem *item);
 private:
+    void loadChatHistory(uint64_t chatId); 
+    void markMessageAsUnread(uint64_t senderId);
+    void updateUnreadCount(uint64_t chatId);
+    void initFriendList();
     void loatFriendData();
+    uint64_t currentChatId_; // 当前聊天对象的 ID
+    QMap<uint64_t, int> unreadCounts_; // 未读消息计数
     std::shared_ptr<Ui::ChatWindow> ui_;
     std::shared_ptr<ClientCommunicator> clientcommunicator_;
     PersonalPublicInfo chatobject_;
     QVBoxLayout* m_message_layout;
+    MessageManager* message_mgr_;
 };
 
 #endif // FRIENDWINDOW_H

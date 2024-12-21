@@ -16,6 +16,9 @@ ChatMessage::ChatMessage(const std::string &content, const std::string &sender, 
 std::string ChatMessage::getType() const {
     return "ChatMessage"; 
 }
+std::string ChatMessage::getConent() const {
+    return info_.content;
+}
 
 void ChatMessage::castFromString(const std::string& source) {
     try {
@@ -24,6 +27,13 @@ void ChatMessage::castFromString(const std::string& source) {
     } catch(std::exception e) {
     }
 }
+
+void ChatMessage::castFromJsonObject(const QJsonObject& object) {
+    info_.content = object.value("content").toString().toStdString();
+    info_.uid_sender = object.value("from_user_id").toInt(); 
+}
+
+
 void ChatMessage::printMessage() {
 }
 nlohmann::json ChatMessage::toJson() const {
@@ -38,6 +48,13 @@ nlohmann::json ChatMessage::toJson() const {
     {"messagetype", static_cast<int>(contenttype_)},
     {"status", static_cast<int>(status_)}
 };
+}
+void ChatMessage::setContent(const std::string& content) {
+    info_.content = content;
+}
+
+void ChatMessage::setTimestamp(const std::string& time) {
+    info_.time = time;
 }
 AddFriendRequestMessage::AddFriendRequestMessage(const std::string& friend_username, uint64_t friend_id, const std::string& own_username, uint64_t own_id) : MessageBase(ContentType::Text, MessageStatus::Created) {
     info_.friend_username = friend_username;

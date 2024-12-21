@@ -28,7 +28,6 @@ public:
     FriendChatListItemWindow(const QString image_path, PersonalPublicInfo info, QWidget *parent = nullptr);
     QSize sizeHint() const override {
         return QSize(200, 100);
-
     };
     QString getName() {return QString::fromStdString(m_info.username);}
     QString getemail(){return QString::fromStdString(m_info.email);}

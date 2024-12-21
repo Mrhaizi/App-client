@@ -1,7 +1,11 @@
 #include "FriendApplyItem.h"
 #include "ChatMessage.h"
 #include "PersonManager.h"
+#include <QtWebSockets/qwebsocket.h>
 #include <QtWidgets/qpushbutton.h>
+#include <qjsonobject.h>
+#include <string>
+#include "WebSocketMgr.h"
 
 FriendApplyItem::FriendApplyItem(const QString image_path, PersonalPublicInfo info, QWidget *parent, ClientCommunicator::ptr clientcommunicator) :
     ListItemBase(parent),
@@ -18,11 +22,20 @@ FriendApplyItem::FriendApplyItem(const QString image_path, PersonalPublicInfo in
 }
 
 void FriendApplyItem::accept() {
-    FriendConfirmMessage confirm_msg(true, m_info.id, PersonManager::singleton::getInstance()->getPublicInfo().id );
-    clientcommunicator_->sendMessage(FriendConfirm, QString::fromStdString(confirm_msg.toJson().dump()).toUtf8());
+    QJsonObject msg;
+
+    std::cout << m_info.id << std::endl;
+    msg["type"] = "accept_friend";
+    msg["request_id"] = (int)m_info.id;
+    WebSocketHandler::GetInstance()->sendMessage(msg);
+    this->close();
 }
 
 void FriendApplyItem::refuse() {
-    FriendConfirmMessage confirm_msg(false, m_info.id, PersonManager::singleton::getInstance()->getPublicInfo().id );
-    clientcommunicator_->sendMessage(FriendConfirm, QString::fromStdString(confirm_msg.toJson().dump()).toUtf8());
+    QJsonObject msg;
+    msg["type"] = "reject_friend";
+    std::cout << m_info.id << std::endl;
+    msg["request_id"] = (int)m_info.id;
+    WebSocketHandler::GetInstance()->sendMessage(msg);
+    this->close();
 }

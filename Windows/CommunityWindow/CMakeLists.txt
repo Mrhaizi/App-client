@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(AddressBookWindow)
+project(CommunityWindow)
 
 # 收集源文件
 file(GLOB_RECURSE SRC src/*.cpp)
